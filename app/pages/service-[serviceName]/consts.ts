@@ -5,56 +5,56 @@ interface FormInfo {
 
 export const formLabels: Record<string, FormInfo> = {
   sqrt: {
-    label: "Square Root (√x)",
+    label: "Square Root ( √x )",
     args: ["Number"],
   },
   abs: {
-    label: "Absolute Value (|x|)",
+    label: "Absolute Value ( |x| )",
     args: ["Number"],
   },
   power: {
-    label: "Exponentiation (xʸ)",
-    args: ["Base (x)", "Exponent (y)"],
+    label: "Exponentiation ( xʸ )",
+    args: ["Base", "Exponent"],
   },
   log: {
     label: "Logarithm (log base x of y)",
-    args: ["Base (x)", "Value (y)"],
+    args: ["Base", "Value"],
   },
   round: {
     label: "Round Number (Round x to y decimal places)",
-    args: ["Number", "Decimal Places"],
+    args: ["Number", "Places"],
   },
-  rootmeansquare: {
+  rms: {
     label: "Root Mean Square (RMS)",
-    args: ["Values (comma-separated)"],
+    args: ["Number", "Number"],
   },
-  geometricmean: {
+  gm: {
     label: "Geometric Mean",
-    args: ["Values (comma-separated)"],
+    args: ["Number", "Number"],
   },
-  bodymassindex: {
+  bmi: {
     label: "Body Mass Index (BMI)",
     args: ["Weight (kg)", "Height (cm)"],
   },
-  powerleveldiff: {
+  pld: {
     label: "Power Level Difference",
-    args: ["Initial Power Level", "Final Power Level"],
+    args: ["Initial Level", "Final Level"],
   },
-  percentagevaluechange: {
+  pvc: {
     label: "Percentage Value Change",
     args: ["Original Value", "New Value"],
   },
   add: {
     label: "Addition (x + y)",
-    args: ["Addend 1", "Addend 2"],
+    args: ["Number", "Number"],
   },
   sub: {
     label: "Subtraction (x − y)",
-    args: ["Minuend", "Subtrahend"],
+    args: ["Number", "Number"],
   },
   mul: {
     label: "Multiplication (x × y)",
-    args: ["Factor 1", "Factor 2"],
+    args: ["Factor", "Factor"],
   },
   div: {
     label: "Division (x ÷ y)",

@@ -1,8 +1,6 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  imports: {
-    autoImport: true,
-    dirs: ["utils"],
+  fonts: {
+    provider: "google",
   },
 
   devtools: { enabled: true },

@@ -1,58 +1,105 @@
 <template>
-    <div class="flex flex-col items-center justify-center w-1/2 h-1/2">
-        <UCard>
-            <template #header>
-                <UBadge>
-                    {{ route.params.serviceName }}
-                    {{ route.params.operation }}</UBadge
-                >
-            </template>
-
+    <div class="flex flex-col items-center justify-center w-full h-full">
+        <h1 class="font-bold mb-5">
+            {{ formLabels[route.params.operation as string]!.label }}
+        </h1>
+        <UCard class="w-1/2 h-1/4">
             <UForm
                 :schema="operationSchema"
                 :state="operationState"
-                :label="formLabels[route.params.operation as string]!.label"
                 class="space-y-4"
                 @submit="onSubmit"
             >
-                <UFormField
-                    :label="
-                        formLabels[route.params.operation as string]!.args[0]
-                    "
-                    :name="
-                        operationType === binaryOperation
-                            ? 'firstNumber'
-                            : 'number'
-                    "
-                >
-                    <UInput
+                <div class="flex space-x-4">
+                    <UFormField
+                        :name="
+                            operationType === binaryOperation
+                                ? 'firstNumber'
+                                : 'number'
+                        "
+                        class="flex-auto"
+                    >
+                        <div class="flex items-center space-x-2">
+                            <div class="flex items-center">
+                                <UIcon name="ph:hash" class="text-base mr-1" />
+                                <span class="text-base">
+                                    {{
+                                        formLabels[
+                                            route.params.operation as string
+                                        ]!.args[0]
+                                    }}
+                                </span>
+                            </div>
+
+                            <div>
+                                <UInput
+                                    v-if="operationType === binaryOperation"
+                                    v-model="
+                                        (operationState as typeof binaryState)
+                                            .firstNumber
+                                    "
+                                    type="number"
+                                />
+
+                                <UInput
+                                    v-else
+                                    v-model="
+                                        (operationState as typeof unaryState)
+                                            .number
+                                    "
+                                    type="number"
+                                />
+                            </div>
+                        </div>
+                    </UFormField>
+
+                    <UFormField
                         v-if="operationType === binaryOperation"
-                        v-model="
-                            (operationState as typeof binaryState).firstNumber
-                        "
-                    />
-                    <UInput
-                        v-else
-                        v-model="(operationState as typeof unaryState).number"
-                    />
-                </UFormField>
+                        name="secondNumber"
+                        class="flex-auto"
+                    >
+                        <div class="flex items-center space-x-2">
+                            <div class="flex items-center">
+                                <UIcon name="ph:hash" class="text-base mr-1" />
+                                <span class="text-base">
+                                    {{
+                                        formLabels[
+                                            route.params.operation as string
+                                        ]!.args[1]
+                                    }}
+                                </span>
+                            </div>
 
-                <UFormField
-                    v-if="operationType === binaryOperation"
-                    :label="
-                        formLabels[route.params.operation as string]!.args[1]
-                    "
-                    name="secondNumber"
-                >
-                    <UInput
-                        v-model="
-                            (operationState as typeof binaryState).secondNumber
-                        "
-                    />
-                </UFormField>
+                            <UInput
+                                v-model="
+                                    (operationState as typeof binaryState)
+                                        .secondNumber
+                                "
+                                type="number"
+                            />
+                        </div>
+                    </UFormField>
+                </div>
 
-                <UButton type="submit"> Compute </UButton>
+                <UButton icon="ph:calculator" type="submit"> Compute </UButton>
             </UForm>
+
+            <template #footer>
+                <div class="flex gap-2">
+                    <span>Computed result:</span>
+                    <template v-if="operationInProgress">
+                        <UIcon
+                            name="tabler:loader-2"
+                            class="text-base text-primary animate-spin"
+                        />
+                    </template>
+                    <template v-else>
+                        <span class="font-bold">{{
+                            result ?? "No operation executed"
+                        }}</span>
+                    </template>
+                </div>
+            </template>
         </UCard>
     </div>
 </template>
@@ -63,6 +110,10 @@ import type { FormSubmitEvent } from "@nuxt/ui";
 import { formLabels } from "./consts";
 
 const route = useRoute();
+
+const result = ref<number | undefined>();
+
+const operationInProgress = ref<boolean>(false);
 
 const unaryOperation = Symbol();
 const unarySchema = v.object({
@@ -109,5 +160,6 @@ const operationSchema = computed<typeof binarySchema | typeof unarySchema>(
 
 const onSubmit = async (event: FormSubmitEvent<UnarySchema | BinarySchema>) => {
     console.log(event);
+    operationInProgress.value = true;
 };
 </script>

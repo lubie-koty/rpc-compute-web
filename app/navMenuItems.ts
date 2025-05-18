@@ -15,19 +15,19 @@ export const navMenuItems = [
       children: [
         {
           label: "Add",
-          to: "/math/service-simple/add",
+          to: "/service-simple/add",
         },
         {
           label: "Subtract",
-          to: "/math/service-simple/sub",
+          to: "/service-simple/sub",
         },
         {
           label: "Multiply",
-          to: "/math/service-simple/mul",
+          to: "/service-simple/mul",
         },
         {
           label: "Divide",
-          to: "/math/service-simple/div",
+          to: "/service-simple/div",
         },
       ],
     },
@@ -37,23 +37,23 @@ export const navMenuItems = [
       children: [
         {
           label: "Square root",
-          to: "/math/service-complex/sqrt",
+          to: "/service-complex/sqrt",
         },
         {
           label: "Absolute value",
-          to: "/math/service-complex/abs",
+          to: "/service-complex/abs",
         },
         {
           label: "Exponentiation",
-          to: "/math/service-complex/power",
+          to: "/service-complex/power",
         },
         {
           label: "Logarithm",
-          to: "/math/service-complex/log",
+          to: "/service-complex/log",
         },
         {
           label: "Rounded value",
-          to: "/math/service-complex/round",
+          to: "/service-complex/round",
         },
       ],
     },
@@ -63,23 +63,23 @@ export const navMenuItems = [
       children: [
         {
           label: "Root mean square",
-          to: "/math/service-combined/rms",
+          to: "/service-combined/rms",
         },
         {
           label: "Geometric mean",
-          to: "/math/service-combined/gm",
+          to: "/service-combined/gm",
         },
         {
           label: "Body mass index",
-          to: "/math/service-combined/bmi",
+          to: "/service-combined/bmi",
         },
         {
           label: "Sound power level",
-          to: "/math/service-combined/pld",
+          to: "/service-combined/pld",
         },
         {
           label: "Difference between values (%)",
-          to: "/math/service-combined/pvc",
+          to: "/service-combined/pvc",
         },
       ],
     },
