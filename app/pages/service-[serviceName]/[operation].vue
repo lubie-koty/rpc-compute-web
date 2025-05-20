@@ -105,14 +105,12 @@
 </template>
 
 <script setup lang="ts">
-import * as v from "valibot";
+import { formLabels } from "@/consts/form-info";
 import type { FormSubmitEvent } from "@nuxt/ui";
-import { formLabels } from "./consts";
+import * as v from "valibot";
 
 const route = useRoute();
-
 const result = ref<number | undefined>();
-
 const operationInProgress = ref<boolean>(false);
 
 const unaryOperation = Symbol();

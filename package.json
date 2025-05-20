@@ -12,9 +12,13 @@
     "lint:fix": "eslint --fix ."
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.13.3",
+    "@grpc/proto-loader": "^0.7.15",
     "@iconify-json/lucide": "^1.2.40",
     "@iconify-json/simple-icons": "^1.2.33",
     "@nuxt/ui": "^3.1.1",
+    "@protobuf-ts/plugin": "^2.10.0",
+    "@protobuf-ts/runtime": "^2.10.0",
     "nuxt": "^3.17.2",
     "valibot": "^1.1.0"
   },

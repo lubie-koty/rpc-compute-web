@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
-import { navMenuItems } from "./navMenuItems";
+import { navMenuItems } from "@/consts/nav-menu";
 
 const items = ref<NavigationMenuItem[]>(navMenuItems);
 </script>
