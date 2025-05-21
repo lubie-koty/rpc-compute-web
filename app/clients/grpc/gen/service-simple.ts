@@ -4,10 +4,10 @@
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
 import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
 import type { BinaryReadOptions } from "@protobuf-ts/runtime";
 import type { IBinaryReader } from "@protobuf-ts/runtime";
 import { UnknownFieldHandler } from "@protobuf-ts/runtime";
+import { WireType } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
@@ -16,13 +16,9 @@ import { MessageType } from "@protobuf-ts/runtime";
  */
 export interface OperationRequest {
     /**
-     * @generated from protobuf field: double first_number = 1;
+     * @generated from protobuf field: repeated double numbers = 1;
      */
-    firstNumber: number;
-    /**
-     * @generated from protobuf field: double second_number = 2;
-     */
-    secondNumber: number;
+    numbers: number[];
 }
 /**
  * @generated from protobuf message simple.OperationResponse
@@ -37,14 +33,12 @@ export interface OperationResponse {
 class OperationRequest$Type extends MessageType<OperationRequest> {
     constructor() {
         super("simple.OperationRequest", [
-            { no: 1, name: "first_number", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 2, name: "second_number", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
+            { no: 1, name: "numbers", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ }
         ]);
     }
     create(value?: PartialMessage<OperationRequest>): OperationRequest {
         const message = globalThis.Object.create((this.messagePrototype!));
-        message.firstNumber = 0;
-        message.secondNumber = 0;
+        message.numbers = [];
         if (value !== undefined)
             reflectionMergePartial<OperationRequest>(this, message, value);
         return message;
@@ -54,11 +48,12 @@ class OperationRequest$Type extends MessageType<OperationRequest> {
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
             switch (fieldNo) {
-                case /* double first_number */ 1:
-                    message.firstNumber = reader.double();
-                    break;
-                case /* double second_number */ 2:
-                    message.secondNumber = reader.double();
+                case /* repeated double numbers */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.numbers.push(reader.double());
+                    else
+                        message.numbers.push(reader.double());
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -72,12 +67,13 @@ class OperationRequest$Type extends MessageType<OperationRequest> {
         return message;
     }
     internalBinaryWrite(message: OperationRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* double first_number = 1; */
-        if (message.firstNumber !== 0)
-            writer.tag(1, WireType.Bit64).double(message.firstNumber);
-        /* double second_number = 2; */
-        if (message.secondNumber !== 0)
-            writer.tag(2, WireType.Bit64).double(message.secondNumber);
+        /* repeated double numbers = 1; */
+        if (message.numbers.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.numbers.length; i++)
+                writer.double(message.numbers[i]);
+            writer.join();
+        }
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);

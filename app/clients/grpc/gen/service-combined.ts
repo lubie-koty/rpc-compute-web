@@ -4,13 +4,22 @@
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
 import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
 import type { BinaryReadOptions } from "@protobuf-ts/runtime";
 import type { IBinaryReader } from "@protobuf-ts/runtime";
 import { UnknownFieldHandler } from "@protobuf-ts/runtime";
+import { WireType } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+/**
+ * @generated from protobuf message protos.RepeatedOperationRequest
+ */
+export interface RepeatedOperationRequest {
+    /**
+     * @generated from protobuf field: repeated double numbers = 1;
+     */
+    numbers: number[];
+}
 /**
  * @generated from protobuf message protos.OperationRequest
  */
@@ -33,6 +42,61 @@ export interface OperationResponse {
      */
     result: number;
 }
+// @generated message type with reflection information, may provide speed optimized methods
+class RepeatedOperationRequest$Type extends MessageType<RepeatedOperationRequest> {
+    constructor() {
+        super("protos.RepeatedOperationRequest", [
+            { no: 1, name: "numbers", kind: "scalar", repeat: 1 /*RepeatType.PACKED*/, T: 1 /*ScalarType.DOUBLE*/ }
+        ]);
+    }
+    create(value?: PartialMessage<RepeatedOperationRequest>): RepeatedOperationRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.numbers = [];
+        if (value !== undefined)
+            reflectionMergePartial<RepeatedOperationRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RepeatedOperationRequest): RepeatedOperationRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* repeated double numbers */ 1:
+                    if (wireType === WireType.LengthDelimited)
+                        for (let e = reader.int32() + reader.pos; reader.pos < e;)
+                            message.numbers.push(reader.double());
+                    else
+                        message.numbers.push(reader.double());
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RepeatedOperationRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* repeated double numbers = 1; */
+        if (message.numbers.length) {
+            writer.tag(1, WireType.LengthDelimited).fork();
+            for (let i = 0; i < message.numbers.length; i++)
+                writer.double(message.numbers[i]);
+            writer.join();
+        }
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message protos.RepeatedOperationRequest
+ */
+export const RepeatedOperationRequest = new RepeatedOperationRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class OperationRequest$Type extends MessageType<OperationRequest> {
     constructor() {
@@ -139,9 +203,9 @@ export const OperationResponse = new OperationResponse$Type();
  * @generated ServiceType for protobuf service protos.CombinedCompute
  */
 export const CombinedCompute = new ServiceType("protos.CombinedCompute", [
-    { name: "RootMeanSquare", options: {}, I: OperationRequest, O: OperationResponse },
-    { name: "GeometricMean", options: {}, I: OperationRequest, O: OperationResponse },
-    { name: "BodyMassIndex", options: {}, I: OperationRequest, O: OperationResponse },
+    { name: "RootMeanSquare", clientStreaming: true, options: {}, I: RepeatedOperationRequest, O: OperationResponse },
+    { name: "GeometricMean", serverStreaming: true, options: {}, I: RepeatedOperationRequest, O: OperationResponse },
+    { name: "BodyMassIndex", serverStreaming: true, clientStreaming: true, options: {}, I: OperationRequest, O: OperationResponse },
     { name: "PowerLevelDiff", options: {}, I: OperationRequest, O: OperationResponse },
     { name: "PercentageValueChange", options: {}, I: OperationRequest, O: OperationResponse }
 ]);

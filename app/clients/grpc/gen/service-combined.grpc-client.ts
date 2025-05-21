@@ -4,34 +4,31 @@
 import { CombinedCompute } from "./service-combined";
 import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
 import type { BinaryReadOptions } from "@protobuf-ts/runtime";
-import type { OperationResponse } from "./service-combined";
 import type { OperationRequest } from "./service-combined";
+import type { RepeatedOperationRequest } from "./service-combined";
+import type { OperationResponse } from "./service-combined";
 import * as grpc from "@grpc/grpc-js";
 /**
  * @generated from protobuf service protos.CombinedCompute
  */
 export interface ICombinedComputeClient {
     /**
-     * @generated from protobuf rpc: RootMeanSquare(protos.OperationRequest) returns (protos.OperationResponse);
+     * @generated from protobuf rpc: RootMeanSquare(stream protos.RepeatedOperationRequest) returns (protos.OperationResponse);
      */
-    rootMeanSquare(input: OperationRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientUnaryCall;
-    rootMeanSquare(input: OperationRequest, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientUnaryCall;
-    rootMeanSquare(input: OperationRequest, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientUnaryCall;
-    rootMeanSquare(input: OperationRequest, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientUnaryCall;
+    rootMeanSquare(metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientWritableStream<RepeatedOperationRequest>;
+    rootMeanSquare(metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientWritableStream<RepeatedOperationRequest>;
+    rootMeanSquare(options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientWritableStream<RepeatedOperationRequest>;
+    rootMeanSquare(callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientWritableStream<RepeatedOperationRequest>;
     /**
-     * @generated from protobuf rpc: GeometricMean(protos.OperationRequest) returns (protos.OperationResponse);
+     * @generated from protobuf rpc: GeometricMean(protos.RepeatedOperationRequest) returns (stream protos.OperationResponse);
      */
-    geometricMean(input: OperationRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientUnaryCall;
-    geometricMean(input: OperationRequest, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientUnaryCall;
-    geometricMean(input: OperationRequest, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientUnaryCall;
-    geometricMean(input: OperationRequest, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientUnaryCall;
+    geometricMean(input: RepeatedOperationRequest, metadata?: grpc.Metadata, options?: grpc.CallOptions): grpc.ClientReadableStream<OperationResponse>;
+    geometricMean(input: RepeatedOperationRequest, options?: grpc.CallOptions): grpc.ClientReadableStream<OperationResponse>;
     /**
-     * @generated from protobuf rpc: BodyMassIndex(protos.OperationRequest) returns (protos.OperationResponse);
+     * @generated from protobuf rpc: BodyMassIndex(stream protos.OperationRequest) returns (stream protos.OperationResponse);
      */
-    bodyMassIndex(input: OperationRequest, metadata: grpc.Metadata, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientUnaryCall;
-    bodyMassIndex(input: OperationRequest, metadata: grpc.Metadata, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientUnaryCall;
-    bodyMassIndex(input: OperationRequest, options: grpc.CallOptions, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientUnaryCall;
-    bodyMassIndex(input: OperationRequest, callback: (err: grpc.ServiceError | null, value?: OperationResponse) => void): grpc.ClientUnaryCall;
+    bodyMassIndex(metadata: grpc.Metadata, options?: grpc.CallOptions): grpc.ClientDuplexStream<OperationRequest, OperationResponse>;
+    bodyMassIndex(options?: grpc.CallOptions): grpc.ClientDuplexStream<OperationRequest, OperationResponse>;
     /**
      * @generated from protobuf rpc: PowerLevelDiff(protos.OperationRequest) returns (protos.OperationResponse);
      */
@@ -57,25 +54,25 @@ export class CombinedComputeClient extends grpc.Client implements ICombinedCompu
         this._binaryOptions = binaryOptions;
     }
     /**
-     * @generated from protobuf rpc: RootMeanSquare(protos.OperationRequest) returns (protos.OperationResponse);
+     * @generated from protobuf rpc: RootMeanSquare(stream protos.RepeatedOperationRequest) returns (protos.OperationResponse);
      */
-    rootMeanSquare(input: OperationRequest, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: OperationResponse) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: OperationResponse) => void), callback?: ((err: grpc.ServiceError | null, value?: OperationResponse) => void)): grpc.ClientUnaryCall {
+    rootMeanSquare(metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: OperationResponse) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: OperationResponse) => void), callback?: ((err: grpc.ServiceError | null, value?: OperationResponse) => void)): grpc.ClientWritableStream<RepeatedOperationRequest> {
         const method = CombinedCompute.methods[0];
-        return this.makeUnaryRequest<OperationRequest, OperationResponse>(`/${CombinedCompute.typeName}/${method.name}`, (value: OperationRequest): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): OperationResponse => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+        return this.makeClientStreamRequest<RepeatedOperationRequest, OperationResponse>(`/${CombinedCompute.typeName}/${method.name}`, (value: RepeatedOperationRequest): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): OperationResponse => method.O.fromBinary(value, this._binaryOptions), (metadata as any), (options as any), (callback as any));
     }
     /**
-     * @generated from protobuf rpc: GeometricMean(protos.OperationRequest) returns (protos.OperationResponse);
+     * @generated from protobuf rpc: GeometricMean(protos.RepeatedOperationRequest) returns (stream protos.OperationResponse);
      */
-    geometricMean(input: OperationRequest, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: OperationResponse) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: OperationResponse) => void), callback?: ((err: grpc.ServiceError | null, value?: OperationResponse) => void)): grpc.ClientUnaryCall {
+    geometricMean(input: RepeatedOperationRequest, metadata?: grpc.Metadata | grpc.CallOptions, options?: grpc.CallOptions): grpc.ClientReadableStream<OperationResponse> {
         const method = CombinedCompute.methods[1];
-        return this.makeUnaryRequest<OperationRequest, OperationResponse>(`/${CombinedCompute.typeName}/${method.name}`, (value: OperationRequest): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): OperationResponse => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+        return this.makeServerStreamRequest<RepeatedOperationRequest, OperationResponse>(`/${CombinedCompute.typeName}/${method.name}`, (value: RepeatedOperationRequest): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): OperationResponse => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), options);
     }
     /**
-     * @generated from protobuf rpc: BodyMassIndex(protos.OperationRequest) returns (protos.OperationResponse);
+     * @generated from protobuf rpc: BodyMassIndex(stream protos.OperationRequest) returns (stream protos.OperationResponse);
      */
-    bodyMassIndex(input: OperationRequest, metadata: grpc.Metadata | grpc.CallOptions | ((err: grpc.ServiceError | null, value?: OperationResponse) => void), options?: grpc.CallOptions | ((err: grpc.ServiceError | null, value?: OperationResponse) => void), callback?: ((err: grpc.ServiceError | null, value?: OperationResponse) => void)): grpc.ClientUnaryCall {
+    bodyMassIndex(metadata?: grpc.Metadata | grpc.CallOptions, options?: grpc.CallOptions): grpc.ClientDuplexStream<OperationRequest, OperationResponse> {
         const method = CombinedCompute.methods[2];
-        return this.makeUnaryRequest<OperationRequest, OperationResponse>(`/${CombinedCompute.typeName}/${method.name}`, (value: OperationRequest): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): OperationResponse => method.O.fromBinary(value, this._binaryOptions), input, (metadata as any), (options as any), (callback as any));
+        return this.makeBidiStreamRequest<OperationRequest, OperationResponse>(`/${CombinedCompute.typeName}/${method.name}`, (value: OperationRequest): Buffer => Buffer.from(method.I.toBinary(value, this._binaryOptions)), (value: Buffer): OperationResponse => method.O.fromBinary(value, this._binaryOptions), (metadata as any), options);
     }
     /**
      * @generated from protobuf rpc: PowerLevelDiff(protos.OperationRequest) returns (protos.OperationResponse);
