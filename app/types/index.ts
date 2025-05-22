@@ -30,3 +30,16 @@ export interface APIClient {
 export interface OperationResponse {
   result: number | undefined;
 }
+
+export interface RepeatedOperationRequest {
+  numbers: number[];
+}
+
+export interface UnaryRequest {
+  number: number;
+}
+
+export interface BinaryRequest {
+  first_number: number;
+  second_number: number;
+}
