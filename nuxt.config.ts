@@ -16,8 +16,11 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-11-27",
 
   runtimeConfig: {
-    serviceSimpleUrl: "",
-    serviceComplexUrl: "",
-    serviceCombinedUrl: "",
+    HTTPServiceSimpleUrl: "",
+    HTTPServiceComplexUrl: "",
+    HTTPServiceCombinedUrl: "",
+    gRPCServiceSimpleUrl: "",
+    gRPCServiceComplexUrl: "",
+    gRPCServiceCombinedUrl: "",
   },
 });

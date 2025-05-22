@@ -26,3 +26,7 @@ export interface APIClient {
   complex: ComplexServiceClient;
   simple: SimpleServiceClient;
 }
+
+export interface OperationResponse {
+  result: number | undefined;
+}

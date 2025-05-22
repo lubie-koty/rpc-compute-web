@@ -22,19 +22,19 @@ export class GRPCClient implements APIClient {
   constructor() {
     this.combined = new GRPCCombinedServiceClient(
       new CombinedComputeClient(
-        runtimeConfig.serviceCombinedUrl as string,
+        runtimeConfig.gRPCServiceCombinedUrl as string,
         ChannelCredentials.createInsecure(),
       ),
     );
     this.complex = new GRPCComplexServiceClient(
       new ComplexComputeClient(
-        runtimeConfig.serviceComplexUrl as string,
+        runtimeConfig.gRPCServiceComplexUrl as string,
         ChannelCredentials.createInsecure(),
       ),
     );
     this.simple = new GRPCSimpleServiceClient(
       new SimpleComputeClient(
-        runtimeConfig.serviceSimpleUrl as string,
+        runtimeConfig.gRPCServiceSimpleUrl as string,
         ChannelCredentials.createInsecure(),
       ),
     );
