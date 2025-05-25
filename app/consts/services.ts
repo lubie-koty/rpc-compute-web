@@ -1,4 +1,4 @@
 export enum ServiceClientType {
-  GRPC,
-  HTTP,
+  GRPC = "grpc",
+  HTTP = "http",
 }

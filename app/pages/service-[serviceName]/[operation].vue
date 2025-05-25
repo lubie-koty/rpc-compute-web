@@ -10,18 +10,17 @@
                 class="space-y-4"
                 @submit="onSubmit"
             >
-                <div class="flex space-x-4">
+                <div class="flex justify-between items-center">
                     <UFormField
                         :name="
                             operationType === binaryOperation
                                 ? 'firstNumber'
                                 : 'number'
                         "
-                        class="flex-auto"
                     >
                         <div class="flex items-center space-x-2">
                             <div class="flex items-center">
-                                <UIcon name="ph:hash" class="text-base mr-1" />
+                                <!-- <UIcon name="ph:hash" class="text-base mr-1" /> -->
                                 <span class="text-base">
                                     {{
                                         formLabels[
@@ -56,11 +55,10 @@
                     <UFormField
                         v-if="operationType === binaryOperation"
                         name="secondNumber"
-                        class="flex-auto"
                     >
                         <div class="flex items-center space-x-2">
                             <div class="flex items-center">
-                                <UIcon name="ph:hash" class="text-base mr-1" />
+                                <!-- <UIcon name="ph:hash" class="text-base mr-1" /> -->
                                 <span class="text-base">
                                     {{
                                         formLabels[
@@ -105,13 +103,16 @@
 </template>
 
 <script setup lang="ts">
+import type { OperationResponse } from "@/types";
 import { formLabels } from "@/consts/form-info";
-import type { FormSubmitEvent } from "@nuxt/ui";
 import * as v from "valibot";
+
+const manyNumbersOperation = ["add", "sub", "mul", "div", "rms", "gm"];
 
 const route = useRoute();
 const result = ref<number | undefined>();
 const operationInProgress = ref<boolean>(false);
+const clientMode = useState<string>("client-mode");
 
 const unaryOperation = Symbol();
 const unarySchema = v.object({
@@ -120,7 +121,6 @@ const unarySchema = v.object({
 const unaryState = reactive({
     number: 0,
 });
-type UnarySchema = v.InferOutput<typeof unarySchema>;
 
 const binaryOperation = Symbol();
 const binarySchema = v.object({
@@ -131,7 +131,6 @@ const binaryState = reactive({
     firstNumber: 0,
     secondNumber: 0,
 });
-type BinarySchema = v.InferOutput<typeof binarySchema>;
 
 const operationType = computed<symbol>(() => {
     const { serviceName, operation } = route.params;
@@ -156,8 +155,39 @@ const operationSchema = computed<typeof binarySchema | typeof unarySchema>(
     },
 );
 
-const onSubmit = async (event: FormSubmitEvent<UnarySchema | BinarySchema>) => {
-    console.log(event);
+const operationRequest = computed(() => {
+    const { operation } = route.params;
+    if (manyNumbersOperation.includes(operation as string)) {
+        return {
+            numbers: [binaryState.firstNumber, binaryState.secondNumber],
+        };
+    }
+    return operationType.value === binaryOperation
+        ? {
+              firstNumber: binaryState.firstNumber,
+              secondNumber: binaryState.secondNumber,
+          }
+        : { number: unaryState.number };
+});
+
+const getOperationResult = async () => {
+    const { operation } = route.params;
+    try {
+        const response = await useFetch<OperationResponse>(
+            `/api/${clientMode.value}-${operation}`,
+            {
+                body: JSON.stringify(operationRequest.value),
+            },
+        );
+        result.value = response.data.value?.result;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const onSubmit = async () => {
     operationInProgress.value = true;
+    await getOperationResult();
+    operationInProgress.value = false;
 };
 </script>

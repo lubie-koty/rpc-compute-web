@@ -2,7 +2,8 @@ import { getActiveServiceClient } from "@/clients";
 import type { RepeatedOperationRequest } from "@/types";
 
 export default defineEventHandler(async (event) => {
-  const client = getActiveServiceClient();
+  const clientType = getRouterParam(event, "clientType");
+  const client = getActiveServiceClient(clientType!);
   const { numbers } = await readBody<RepeatedOperationRequest>(event);
-  return client.simple.add(numbers);
+  return client.combined.rms(numbers);
 });
